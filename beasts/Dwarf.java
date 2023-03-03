@@ -4,8 +4,10 @@ import main.items.Jewellery;
 import main.people.Customer;
 
 public class Dwarf extends EarthBeast{
+    private final String[] beastNames = {"Pantoran", "Selkath", "Skakoan", "Tholothian", "Zeltron", "Zygerrian"};
     public Dwarf(int age) {
         super("Dwarf", age, 107);
+        super.setRandomName(this.beastNames);
     }
 
     @Override

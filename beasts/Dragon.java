@@ -8,10 +8,13 @@ import main.people.Customer;
 import java.util.Stack;
 
 public class Dragon extends AirBeast{
+    private final String[] beastNames = {"Arman", "Falkor", "Dagahra", "Saphira", "Darksmoke", "Mushu", "Diaval"};
     private Stack<Gem> treasure = new Stack<Gem>(); 
     public Dragon(int age) {
         super("Dragon", age, 150);
         this.generateTreasure();
+        super.setRandomName(this.beastNames);
+        this.maxSpeed = 160;
     }
     
     public void generateTreasure(){
@@ -30,6 +33,6 @@ public class Dragon extends AirBeast{
     @Override
     public void extremeReaction(Park park) {
         System.out.println("***** I WILL TURN YOU TO ASHES, YOU BASTARD! *****");
-        
+        park.increaseNumberOfAshedFromDragons();
     }
 }

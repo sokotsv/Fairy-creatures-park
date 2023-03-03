@@ -19,6 +19,7 @@ public class Park {
     protected double budget = 0;
     private int children;
     private int parkCapacity = 100;
+    public int death = 0;
     
     private ArrayList<Attraction> normalAttractions = new ArrayList<>();
     private ArrayList<Attraction> extremeAttractions = new ArrayList<>();
@@ -31,6 +32,8 @@ public class Park {
         if (address != null){
             this.address = address;
         }
+        this.generateCustomers();
+        this.generateAttractions();
     }
     
     public void generateCustomers(){

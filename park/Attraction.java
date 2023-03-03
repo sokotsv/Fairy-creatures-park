@@ -19,6 +19,7 @@ public abstract class Attraction {
         this.price = this.attractionBeast.getBeastPrice();
     }
     public void runAttraction(Park park){
+        System.out.println("This is the " + attractionBeast.getKind() + " - " + attractionBeast.getName() + " performing the tricks.");
         for (int i = 0; i < attractionQueue.size(); i++) {
             Customer currentCustomer = this.attractionQueue.poll();
             this.attractionBeast.performMainTrick(currentCustomer);

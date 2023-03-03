@@ -7,12 +7,15 @@ import main.people.Customer;
 import java.util.Random;
 
 public class Mermaid extends WaterBeast{
+    private final String[] beastNames = {"Naia", "Naida", "Nerida", "Nerissa", "Nixie", "Ondine", "Pearl"};
     private String hairColor;
 
     public Mermaid(int age) {
         super("Mermaid", age, 110);
         this.maxDeep = 100;
         this.hairColor = new Util().chooseRandomColor();
+        super.setRandomName(this.beastNames);
+        this.maxDeep = 300;
     }
 
     @Override

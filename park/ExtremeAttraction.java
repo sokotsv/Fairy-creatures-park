@@ -12,6 +12,7 @@ public class ExtremeAttraction extends Attraction{
         super(attractionBeast);
     }
     public void runAttraction(Park park){
+        System.out.println("This is the " + attractionBeast.getKind() + " - " + attractionBeast.getName() + " performing the tricks.");
         for (int i = 0; i < this.attractionQueue.size(); i++) {
             Customer currentCustomer = this.attractionQueue.poll();
             this.attractionBeast.performMainTrick(currentCustomer);
@@ -24,6 +25,8 @@ public class ExtremeAttraction extends Attraction{
                 }
                 attractionBeast.extremeReaction(park);
                 park.numberOfWatchedAttractions++;
+                park.death++;
+                System.out.println("Death people = " + park.death);
             }
             park.budget += this.price;
             super.visits++;

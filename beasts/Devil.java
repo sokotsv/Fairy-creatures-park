@@ -4,8 +4,10 @@ import main.park.Park;
 import main.people.Customer;
 
 public class Devil extends EarthBeast{
+    private final String[] beastNames = {"Aamon", "Beelzebul", "Troggenoz", "Belphegor", "Druz'gennaus"};
     public Devil(int age) {
         super("Devil", age, 200);
+        super.setRandomName(this.beastNames);
     }
 
     @Override

@@ -14,8 +14,6 @@ import java.util.Random;
 public class Demo {
     public static void main(String[] args) {
         Park krasiPark = new Park("Krasi`s Fantastic Beasts", "Bulgaria blvd.");
-        krasiPark.generateCustomers();
-        krasiPark.generateAttractions();
         
         Queue<Customer> customers = krasiPark.getCustomersQueue();
         System.out.println("********** Let's attractions begin!!! **********");

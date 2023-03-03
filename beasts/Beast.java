@@ -6,8 +6,7 @@ import main.people.Customer;
 import java.util.Random;
 
 public abstract class Beast {
-    private final String[] beastNames = {"Unufri", "Mandle", "Slayer", "Fire Flyer", "Jonny", "Draculla"};
-    private String name;
+    protected String name;
     protected String type;
     protected String kind;
     private int age;
@@ -18,12 +17,9 @@ public abstract class Beast {
         this.type = type;
         this.kind = kind;
         this.beastPrice = beastPrice;
-        int randomName = new Random().nextInt(beastNames.length);
-        this.name = beastNames[randomName];
         if (age > 0){
             this.age = age;
         }
-        
     }
 
     public double getBeastPrice() {
@@ -41,5 +37,9 @@ public abstract class Beast {
 
     public String getKind() {
         return kind;
+    }
+    public void setRandomName(String[] namesList){
+        int randomName = new Random().nextInt(namesList.length);
+        this.name = namesList[randomName];
     }
 }
