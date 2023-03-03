@@ -12,20 +12,22 @@ public class ExtremeAttraction extends Attraction{
         super(attractionBeast);
     }
     public void runAttraction(Park park){
-        Customer currentCustomer = park.customersQueue.poll();
-        this.attractionBeast.performMainTrick(currentCustomer);
-        if (this.chanceToSurvive()){
-            park.customersQueue.add(currentCustomer);
-        }
-        else {
-            if (attractionBeast.getKind().equals("Devil") && currentCustomer.getAge() > 55 && currentCustomer.getGender().equals("Female")){
-                ELDER_WOMEN_TAKEN_FROM_DEVILS++;
+        for (int i = 0; i < this.attractionQueue.size(); i++) {
+            Customer currentCustomer = this.attractionQueue.poll();
+            this.attractionBeast.performMainTrick(currentCustomer);
+            if (this.chanceToSurvive()){
+                park.customersQueue.add(currentCustomer);
             }
-            attractionBeast.extremeReaction(park);
-            park.numberOfWatchedAttractions++;
+            else {
+                if (attractionBeast.getKind().equals("Devil") && currentCustomer.getAge() > 55 && currentCustomer.getGender().equals("Female")){
+                    ELDER_WOMEN_TAKEN_FROM_DEVILS++;
+                }
+                attractionBeast.extremeReaction(park);
+                park.numberOfWatchedAttractions++;
+            }
+            park.budget += this.price;
+            super.visits++;
         }
-        park.budget += this.price;
-        super.visits++;
     }
     public boolean chanceToSurvive(){
         int chance = new Random().nextInt(100);

@@ -19,20 +19,11 @@ public class Demo {
         
         Queue<Customer> customers = krasiPark.getCustomersQueue();
         System.out.println("********** Let's attractions begin!!! **********");
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < customers.size(); j++) {
-                Customer nextCustomer = customers.element();
-                boolean chanceToGoExtreme = new Random().nextBoolean();
-                if (nextCustomer.getAge() > 18 && chanceToGoExtreme){
-                    int randomAttraction = new Random().nextInt(krasiPark.getExtremeAttractions().size());
-                    krasiPark.getExtremeAttractions().get(randomAttraction).runAttraction(krasiPark);
-                }
-                else {
-                    int randomAttraction = new Random().nextInt(krasiPark.getNormalAttractions().size());
-                    krasiPark.getNormalAttractions().get(randomAttraction).runAttraction(krasiPark);
-                }
-            }
+        for (int i = 0; i < 2; i++) {
+            krasiPark.chooseAttraction();
+            krasiPark.runAllAttractions();
         }
+        
         System.out.println("****** Statistics *******");
         krasiPark.statistic1();
         krasiPark.statistic2();

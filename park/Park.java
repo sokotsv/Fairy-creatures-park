@@ -81,13 +81,25 @@ public class Park {
             extremeAttractions.add(extreme3);
         }
     }
-
-    public ArrayList<Attraction> getNormalAttractions() {
-        return normalAttractions;
-    }
-
-    public ArrayList<Attraction> getExtremeAttractions() {
-        return extremeAttractions;
+    public void chooseAttraction() {
+        for (int i = 0; i < customersQueue.size(); i++) {
+            Customer nextCustomer = this.customersQueue.poll();
+            boolean chanceToGoExtreme = new Random().nextBoolean();
+            if (nextCustomer.getAge() > 18 && chanceToGoExtreme) {
+                int randomExtremeAttraction = new Random().nextInt(this.extremeAttractions.size());
+                extremeAttractions.get(randomExtremeAttraction).attractionQueue.add(nextCustomer);
+            } else {
+                int randomNormalAttraction = new Random().nextInt(this.normalAttractions.size());
+                normalAttractions.get(randomNormalAttraction).attractionQueue.add(nextCustomer);
+            }
+        }
+    }public void runAllAttractions(){
+        for (int i = 0; i < extremeAttractions.size(); i++) {
+            extremeAttractions.get(i).runAttraction(this);
+        }
+        for (int i = 0; i < normalAttractions.size(); i++) {
+            normalAttractions.get(i).runAttraction(this);
+        }
     }
 
     public void statistic1(){
