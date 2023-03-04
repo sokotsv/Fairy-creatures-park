@@ -16,6 +16,7 @@ public class Demo {
         Park krasiPark = new Park("Krasi`s Fantastic Beasts", "Bulgaria blvd.");
         
         Queue<Customer> customers = krasiPark.getCustomersQueue();
+        krasiPark.printPriceList();
         System.out.println("********** Let's attractions begin!!! **********");
         for (int i = 0; i < 2; i++) {
             krasiPark.chooseAttraction();
@@ -29,5 +30,7 @@ public class Demo {
         krasiPark.statistic4();
         krasiPark.statistic5();
         System.out.println("The number of the elder women taken from the devils is: " + ExtremeAttraction.ELDER_WOMEN_TAKEN_FROM_DEVILS);
+        System.out.println("People watched extreme: " + krasiPark.goingExtremeAttraction);
+        System.out.println("People watched normal: " + krasiPark.goingNormalAttraction);
     }
 }

@@ -13,7 +13,7 @@ public class ExtremeAttraction extends Attraction{
     }
     public void runAttraction(Park park){
         System.out.println("This is the " + attractionBeast.getKind() + " - " + attractionBeast.getName() + " performing the tricks.");
-        for (int i = 0; i < this.attractionQueue.size(); i++) {
+        while (this.attractionQueue.size() > 0) {
             Customer currentCustomer = this.attractionQueue.poll();
             this.attractionBeast.performMainTrick(currentCustomer);
             if (this.chanceToSurvive()){
@@ -25,8 +25,6 @@ public class ExtremeAttraction extends Attraction{
                 }
                 attractionBeast.extremeReaction(park);
                 park.numberOfWatchedAttractions++;
-                park.death++;
-                System.out.println("Death people = " + park.death);
             }
             park.budget += this.price;
             super.visits++;

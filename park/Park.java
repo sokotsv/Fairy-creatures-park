@@ -6,10 +6,7 @@ import main.people.Child;
 import main.people.Customer;
 import main.people.Retire;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 public class Park {
     private String name;
@@ -20,10 +17,14 @@ public class Park {
     private int children;
     private int parkCapacity = 100;
     public int death = 0;
+    public int goingExtremeAttraction = 0;
+    public int survived = 0;
+    public int goingNormalAttraction = 0;
     
     private ArrayList<Attraction> normalAttractions = new ArrayList<>();
     private ArrayList<Attraction> extremeAttractions = new ArrayList<>();
     private int numberOfAshedFromDragons;
+    private Map<Attraction, Double> priceList = new HashMap<>();
     
     public Park(String name, String address){
         if (name != null){
@@ -69,8 +70,11 @@ public class Park {
             Attraction normal2 = new NormalAttraction(griffin);
             Attraction normal3 = new NormalAttraction(dwarf);
             normalAttractions.add(normal1);
+            priceList.put(normal1, normal1.price);
             normalAttractions.add(normal2);
+            priceList.put(normal2, normal2.price);
             normalAttractions.add(normal3);
+            priceList.put(normal3, normal3.price);
         }
         for (int i = 0; i < 2; i++) {
             Beast mermaid = new Mermaid(80);
@@ -80,28 +84,39 @@ public class Park {
             Attraction extreme2 = new ExtremeAttraction(devil);
             Attraction extreme3 = new ExtremeAttraction(dragon);
             extremeAttractions.add(extreme1);
+            priceList.put(extreme1, extreme1.price);
             extremeAttractions.add(extreme2);
+            priceList.put(extreme2, extreme2.price);
             extremeAttractions.add(extreme3);
+            priceList.put(extreme3, extreme3.price);
         }
     }
+    public void printPriceList(){
+        System.out.println("======== PRICE LIST ========");
+        priceList.entrySet().forEach(entry -> {
+            System.out.println("No " + entry.getKey().attractionNumber + " Attraction name: " +  entry.getKey().name + " - Price: " + entry.getValue());
+        });
+    }
     public void chooseAttraction() {
-        for (int i = 0; i < customersQueue.size(); i++) {
+        while (this.customersQueue.size() > 0) {
             Customer nextCustomer = this.customersQueue.poll();
             boolean chanceToGoExtreme = new Random().nextBoolean();
             if (nextCustomer.getAge() > 18 && chanceToGoExtreme) {
                 int randomExtremeAttraction = new Random().nextInt(this.extremeAttractions.size());
                 extremeAttractions.get(randomExtremeAttraction).attractionQueue.add(nextCustomer);
+                this.goingExtremeAttraction++;
             } else {
                 int randomNormalAttraction = new Random().nextInt(this.normalAttractions.size());
                 normalAttractions.get(randomNormalAttraction).attractionQueue.add(nextCustomer);
+                this.goingNormalAttraction++;
             }
         }
     }public void runAllAttractions(){
-        for (int i = 0; i < extremeAttractions.size(); i++) {
-            extremeAttractions.get(i).runAttraction(this);
+        for (int i = 0; i < this.extremeAttractions.size(); i++) {
+            this.extremeAttractions.get(i).runAttraction(this);
         }
-        for (int i = 0; i < normalAttractions.size(); i++) {
-            normalAttractions.get(i).runAttraction(this);
+        for (int i = 0; i < this.normalAttractions.size(); i++) {
+            this.normalAttractions.get(i).runAttraction(this);
         }
     }
 
