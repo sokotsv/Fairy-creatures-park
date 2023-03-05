@@ -1,6 +1,5 @@
 package main.beasts;
 
-import main.items.Gem;
 import main.items.Pearl;
 import main.people.Customer;
 

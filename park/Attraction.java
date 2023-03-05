@@ -15,6 +15,7 @@ public abstract class Attraction {
     protected Queue<Customer> attractionQueue = new LinkedList<>();
     protected static int attractionIndex = 1;
     protected int attractionNumber;
+    protected int dead = 0;
     
     public Attraction(Beast attractionBeast){
         this.attractionBeast = attractionBeast;
@@ -29,6 +30,7 @@ public abstract class Attraction {
             this.attractionBeast.performMainTrick(currentCustomer);
             park.customersQueue.add(currentCustomer);
             park.budget += this.price;
+            attractionBeast.increaseProfit();
             this.visits++;
         }
     }
@@ -51,5 +53,9 @@ public abstract class Attraction {
     @Override
     public int hashCode() {
         return Objects.hash(name, attractionNumber);
+    }
+
+    public Beast getAttractionBeast() {
+        return attractionBeast;
     }
 }

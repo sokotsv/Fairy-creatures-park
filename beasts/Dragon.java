@@ -1,7 +1,6 @@
 package main.beasts;
 
 import main.items.Gem;
-import main.items.Item;
 import main.park.Park;
 import main.people.Customer;
 
@@ -10,6 +9,7 @@ import java.util.Stack;
 public class Dragon extends AirBeast{
     private final String[] beastNames = {"Arman", "Falkor", "Dagahra", "Saphira", "Darksmoke", "Mushu", "Diaval"};
     private Stack<Gem> treasure = new Stack<Gem>(); 
+    private int victims = 0;
     public Dragon(int age) {
         super("Dragon", age, 150);
         this.generateTreasure();
@@ -33,6 +33,10 @@ public class Dragon extends AirBeast{
     @Override
     public void extremeReaction(Park park) {
         System.out.println("***** I WILL TURN YOU TO ASHES, YOU BASTARD! *****");
-        park.increaseNumberOfAshedFromDragons();
+        victims++;
+    }
+
+    public int getVictims() {
+        return victims;
     }
 }

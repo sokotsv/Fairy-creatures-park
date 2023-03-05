@@ -20,6 +20,7 @@ public class Mermaid extends WaterBeast{
 
     @Override
     public void performMainTrick(Customer customer) {
+        System.out.println(customer.getName() + " I will sing for you:");
         System.out.println("\"Feel the magic under the moon\"\n" +
                 "\"Come with me to the mermaid lagoon\"");
     }

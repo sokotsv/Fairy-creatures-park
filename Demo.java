@@ -1,21 +1,11 @@
 package main;
 
-import main.park.Attraction;
-import main.park.ExtremeAttraction;
 import main.park.Park;
-import main.people.Customer;
-
-import javax.smartcardio.ATR;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
 
 public class Demo {
     public static void main(String[] args) {
         Park krasiPark = new Park("Krasi`s Fantastic Beasts", "Bulgaria blvd.");
         
-        Queue<Customer> customers = krasiPark.getCustomersQueue();
         krasiPark.printPriceList();
         System.out.println("********** Let's attractions begin!!! **********");
         for (int i = 0; i < 2; i++) {
@@ -29,8 +19,10 @@ public class Demo {
         krasiPark.statistic3();
         krasiPark.statistic4();
         krasiPark.statistic5();
-        System.out.println("The number of the elder women taken from the devils is: " + ExtremeAttraction.ELDER_WOMEN_TAKEN_FROM_DEVILS);
-        System.out.println("People watched extreme: " + krasiPark.goingExtremeAttraction);
-        System.out.println("People watched normal: " + krasiPark.goingNormalAttraction);
+        krasiPark.statistic6();
+        krasiPark.statistic7();
+        krasiPark.statistic8();
+        krasiPark.statistic9();
+        krasiPark.statistic10();
     }
 }

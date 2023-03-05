@@ -16,15 +16,14 @@ public class Park {
     protected double budget = 0;
     private int children;
     private int parkCapacity = 100;
-    public int death = 0;
     public int goingExtremeAttraction = 0;
-    public int survived = 0;
     public int goingNormalAttraction = 0;
+    private Map<String, Map<String, ArrayList<Beast>>> beastsByProfit = new HashMap<>();
     
     private ArrayList<Attraction> normalAttractions = new ArrayList<>();
     private ArrayList<Attraction> extremeAttractions = new ArrayList<>();
-    private int numberOfAshedFromDragons;
     private Map<Attraction, Double> priceList = new HashMap<>();
+    
     
     public Park(String name, String address){
         if (name != null){
@@ -59,7 +58,7 @@ public class Park {
             }
             customersQueue.add(customer);
         }
-        System.out.println(customersQueue);
+        //System.out.println(customersQueue);
     }
     public void generateAttractions(){
         for (int i = 0; i < 3; i++) {
@@ -94,7 +93,7 @@ public class Park {
     public void printPriceList(){
         System.out.println("======== PRICE LIST ========");
         priceList.entrySet().forEach(entry -> {
-            System.out.println("No " + entry.getKey().attractionNumber + " Attraction name: " +  entry.getKey().name + " - Price: " + entry.getValue());
+            System.out.println("No " + entry.getKey().attractionNumber + " Attraction name: " + entry.getKey().attractionBeast.getKind() + " - " +  entry.getKey().name + " - Price: " + entry.getValue());
         });
     }
     public void chooseAttraction() {
@@ -121,36 +120,109 @@ public class Park {
     }
 
     public void statistic1(){
-        System.out.println("Number of children - " + children);
+        System.out.println("Number of children visited this park: " + children);
     }
     public void statistic2(){
-        System.out.println("Profit: " + budget);
+        System.out.println("Total profit of the park: " + budget);
     }
     public void statistic3(){
         System.out.print("The most visited normal attraction is ");
         normalAttractions.stream()
                 .sorted((o1, o2) -> o2.getVisits()- o1.getVisits())
                 .limit(1)
-                .forEach(o -> System.out.println(o));
+                .forEach(o -> {
+                    System.out.println(o + " visited " + o.visits + " times.");
+                });
         System.out.print("The most visited extreme attraction is ");
         extremeAttractions.stream()
                 .sorted((o1, o2) -> o2.getVisits()- o1.getVisits())
-//                .limit(1)
-                .forEach(o -> System.out.println(o));
+                .limit(1)
+                .forEach(o -> {
+                    System.out.println(o + " visited " + o.visits + " times.");
+                });
     }
     public void statistic4(){
-        System.out.println("The number of clients who has not survive is " + (parkCapacity - customersQueue.size()) + 
+        System.out.println("The number of clients who does not survive is " + (parkCapacity - customersQueue.size()) + 
                 "\nSurvived clients are " + customersQueue.size());
     }
     public void statistic5(){
-        System.out.println("The number of people ashed from the dragons is " + numberOfAshedFromDragons);
+        System.out.println("The number of the elder women taken from the devils is: " + ExtremeAttraction.elderWomanTakenFromDevils);
     }
-
-    public Queue<Customer> getCustomersQueue() {
-        return customersQueue;
+    public void statistic6(){
+        System.out.println("The names of elder people ashed from the dragons are: ");
+        ExtremeAttraction.namesOfElderPeopleAshedFromDragons.forEach(element -> {
+            System.out.println(element.getName() + " - " + element.getAge() + " years");
+        });
     }
-
-    public void increaseNumberOfAshedFromDragons() {
-        this.numberOfAshedFromDragons++;
+    public void statistic7(){
+        int totalAge = 0;
+        ArrayList<Customer> drownPeople = ExtremeAttraction.drownFromMermaids;
+        for (int i = 0; i < drownPeople.size(); i++) {
+            totalAge += drownPeople.get(i).getAge();
+        }
+        int averageAge = 0;
+        if (drownPeople.size() != 0){
+            averageAge = totalAge / drownPeople.size();   
+        }
+        System.out.println("The average age of people drown by the mermaids is: " + averageAge);
+    }
+    public void statistic8(){
+        extremeAttractions.stream()
+                .map(o -> o.attractionBeast)
+                .filter(beast -> beast instanceof Dragon)
+                .map(Dragon.class::cast)
+                .sorted((d1, d2) -> d2.getVictims()-d1.getVictims())
+                .limit(1)
+                .forEach(element -> {
+                    System.out.println("The most deadly dragon is: " + element.getName() + " with " + element.getVictims() + " victims.");
+                });
+    }
+    private void fillBeastsByProfit(Park park){
+        Beast beast;
+        for (int i = 0; i < park.extremeAttractions.size(); i++) {
+            beast = park.extremeAttractions.get(i).getAttractionBeast();
+            if (!this.beastsByProfit.containsKey(beast.getType())){
+                beastsByProfit.put(beast.getType(), new HashMap<>());
+            }
+            if (!this.beastsByProfit.get(beast.getType()).containsKey(beast.getKind())){
+                beastsByProfit.get(beast.getType()).put(beast.getKind(), new ArrayList<Beast>());
+            }
+            beastsByProfit.get(beast.getType()).get(beast.getKind()).add(beast);
+        }
+        for (int i = 0; i < park.normalAttractions.size(); i++) {
+            beast = park.normalAttractions.get(i).getAttractionBeast();
+            if (!this.beastsByProfit.containsKey(beast.getType())){
+                beastsByProfit.put(beast.getType(), new HashMap<>());
+            }
+            if (!this.beastsByProfit.get(beast.getType()).containsKey(beast.getKind())){
+                beastsByProfit.get(beast.getType()).put(beast.getKind(), new ArrayList<Beast>());
+            }
+            beastsByProfit.get(beast.getType()).get(beast.getKind()).add(beast);
+        }
+    }
+    public void statistic9(){
+        fillBeastsByProfit(this);
+        System.out.println("Park beasts by type, kind and profit:");
+        for (Map.Entry<String, Map<String, ArrayList<Beast>>> b:beastsByProfit.entrySet()){
+            System.out.println(b.getKey() + ": ");
+            Map<String, ArrayList<Beast>> beastsByKind = b.getValue();
+            for (Map.Entry<String, ArrayList<Beast>> b1 : beastsByKind.entrySet()){
+                double price = 0;
+                for (int i = 0; i < b1.getValue().size(); i++) {
+                    price += b1.getValue().get(i).getProfit();
+                }
+                System.out.println("\t * " + b1.getKey() + " - " + price + "$");
+            }
+        }
+    }
+    public void statistic10(){
+        int totalVisited = 0;
+        int totalDead = 0;
+        for (int i = 0; i < extremeAttractions.size(); i++) {
+            totalVisited += extremeAttractions.get(i).visits;
+            totalDead += extremeAttractions.get(i).dead;
+        }
+        double result = ((double) totalDead / (double) totalVisited) * 100;
+        System.out.println("The risk ratio of the extreme attractions is: " + result);
     }
 }

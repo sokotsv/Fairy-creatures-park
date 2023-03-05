@@ -3,10 +3,13 @@ package main.park;
 import main.beasts.Beast;
 import main.people.Customer;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ExtremeAttraction extends Attraction{
-    public static int ELDER_WOMEN_TAKEN_FROM_DEVILS;
+    protected static int elderWomanTakenFromDevils;
+    protected static ArrayList<Customer> namesOfElderPeopleAshedFromDragons = new ArrayList<>();
+    protected static ArrayList<Customer> drownFromMermaids = new ArrayList<>();
     
     public ExtremeAttraction(Beast attractionBeast) {
         super(attractionBeast);
@@ -21,12 +24,20 @@ public class ExtremeAttraction extends Attraction{
             }
             else {
                 if (attractionBeast.getKind().equals("Devil") && currentCustomer.getAge() > 55 && currentCustomer.getGender().equals("Female")){
-                    ELDER_WOMEN_TAKEN_FROM_DEVILS++;
+                    elderWomanTakenFromDevils++;
+                }
+                if (attractionBeast.getKind().equals("Dragon") && currentCustomer.getAge() > 55){
+                    namesOfElderPeopleAshedFromDragons.add(currentCustomer);
+                }
+                if (attractionBeast.getKind().equals("Mermaid")){
+                    drownFromMermaids.add(currentCustomer);
                 }
                 attractionBeast.extremeReaction(park);
+                this.dead++;
                 park.numberOfWatchedAttractions++;
             }
             park.budget += this.price;
+            attractionBeast.increaseProfit();
             super.visits++;
         }
     }
